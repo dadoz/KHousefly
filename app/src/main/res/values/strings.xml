@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KHousefly</string>
+    <string name="intro">Descritpion app</string>
+    <string name="find_button">FIND</string>
+    <string name="owner_hint">owner</string>
+    <string name="repo_hint">hint</string>
 </resources>
