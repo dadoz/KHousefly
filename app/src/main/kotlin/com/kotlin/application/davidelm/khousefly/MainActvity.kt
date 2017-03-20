@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
-
     private fun initView() {
         placeChooserView = findViewById(R.id.placeChooserViewId) as PlaceChooserView?
 

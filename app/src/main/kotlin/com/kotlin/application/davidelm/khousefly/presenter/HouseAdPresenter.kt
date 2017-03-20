@@ -52,7 +52,6 @@ class HouseAdPresenter(activityRef: WeakReference<Activity>, params : SparseArra
                         override fun onError(e: Throwable) {
                             e.printStackTrace()
                             listener.get()!!.onError(e.message)
-
                         }
                     })
         }
