@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.kotlin.application.davidelm.khousefly.R
 import com.kotlin.application.davidelm.khousefly.model.HouseAd
 
@@ -13,7 +15,12 @@ class HouseAdAdapter(list: ArrayList<*>) : RecyclerView.Adapter<HouseAdAdapter.V
     private var list: ArrayList<*> = list
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.titleViewId?.text = (list[position] as HouseAd).title
+        var item = list[position] as HouseAd
+        holder?.titleView?.text = item.title
+        holder?.descriptionView?.text = item.description
+        holder?.priceView?.text = String.format(holder?.itemView?.context
+                ?.getString(R.string.price_placeholder).toString(), item.price)
+        Glide.with(holder?.itemView?.context).load(item.photo).into(holder?.previewView)
     }
 
     override fun getItemCount(): Int {
@@ -27,6 +34,9 @@ class HouseAdAdapter(list: ArrayList<*>) : RecyclerView.Adapter<HouseAdAdapter.V
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titleViewId = view.findViewById(R.id.titleTextId) as TextView
+        val titleView = view.findViewById(R.id.titleTextId) as TextView
+        val descriptionView = view.findViewById(R.id.descriptionTextId) as TextView
+        val priceView = view.findViewById(R.id.priceTextId) as TextView
+        val previewView = view.findViewById(R.id.previewImageId) as ImageView
     }
 }
