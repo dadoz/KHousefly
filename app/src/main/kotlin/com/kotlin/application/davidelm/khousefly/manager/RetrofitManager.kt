@@ -15,7 +15,7 @@ class RetrofitManager {
 
     var instance: RetrofitManager = this
     var service: HouseAdService? = null
-    var baseUrlEndpoint = "https://api.github.com/" //BuildConfig.GITHUB_ENDPOINT
+    var baseUrlEndpoint = BuildConfig.HEROKU_GENTLEFOREST_ENDPOINT
 
     init {
         try {

@@ -3,6 +3,7 @@ package com.kotlin.application.davidelm.khousefly.presenter
 import android.app.Activity
 import android.util.Log
 import android.util.SparseArray
+import com.kotlin.application.davidelm.khousefly.HouseAdView
 import com.kotlin.application.davidelm.khousefly.manager.RetrofitManager
 import com.kotlin.application.davidelm.khousefly.model.HouseAd
 import io.reactivex.Observable
@@ -13,16 +14,20 @@ import io.reactivex.schedulers.Schedulers
 import java.lang.ref.WeakReference
 import java.util.ArrayList
 
-class HouseAdPresenter(activityRef: WeakReference<Activity>, params : SparseArray<String>?) : BasePresenter {
+class HouseAdPresenter(activityRef: WeakReference<HouseAdView>, params : SparseArray<String>?) : BasePresenter {
+    private var houseAdView: WeakReference<HouseAdView>
+
     override fun onFinishedRetrieveItems(list: ArrayList<*>) {
-        Log.e("TAG", list[0].toString())
+        houseAdView.get()?.onRetrieveItems(list)
     }
 
     override fun onError(message: String?) {
+        houseAdView.get()?.onError(message)
     }
 
     init {
         Interactor().retrieveItems(WeakReference(this), params)
+        houseAdView = activityRef
     }
 
     class Interactor : BaseInteractor {
@@ -34,9 +39,8 @@ class HouseAdPresenter(activityRef: WeakReference<Activity>, params : SparseArra
 
 
         override fun retrieveItems(listener: WeakReference<BasePresenter>, params: SparseArray<String>?) {
-            disposable = RetrofitManager()
-                    .instance.service
-                    ?.getHouseAd(params?.get(0), params?.get(1))
+            disposable = RetrofitManager().instance.service
+                    ?.getAds(params?.get(0)!!)
                     ?.filter({ list -> list != null })
                     ?.switchIfEmpty(Observable.just(ArrayList<HouseAd>()))
                     ?.subscribeOn(Schedulers.io())
@@ -46,16 +50,16 @@ class HouseAdPresenter(activityRef: WeakReference<Activity>, params : SparseArra
                         }
 
                         override fun onNext(value: ArrayList<HouseAd>) {
-                            listener.get()!!.onFinishedRetrieveItems(value)
+                            listener.get()?.onFinishedRetrieveItems(value)
                         }
 
                         override fun onError(e: Throwable) {
-                            e.printStackTrace()
-                            listener.get()!!.onError(e.message)
+                            listener.get()?.onError(e.message)
                         }
                     })
         }
 
     }
 }
+
 
