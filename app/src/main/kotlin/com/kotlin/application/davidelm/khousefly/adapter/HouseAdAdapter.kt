@@ -10,9 +10,11 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.kotlin.application.davidelm.khousefly.R
 import com.kotlin.application.davidelm.khousefly.model.HouseAd
+import java.lang.ref.WeakReference
 
-class HouseAdAdapter(list: ArrayList<*>) : RecyclerView.Adapter<HouseAdAdapter.ViewHolder>() {
+class HouseAdAdapter(list: ArrayList<*>, listener: WeakReference<OnSelectedItemClickListener>) : RecyclerView.Adapter<HouseAdAdapter.ViewHolder>() {
     private var list: ArrayList<*> = list
+    private val lst: WeakReference<OnSelectedItemClickListener>? = listener
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         var item = list[position] as HouseAd
@@ -22,6 +24,7 @@ class HouseAdAdapter(list: ArrayList<*>) : RecyclerView.Adapter<HouseAdAdapter.V
         holder?.priceView?.text = String.format(holder?.itemView?.context
                 ?.getString(R.string.price_placeholder).toString(), item.price)
         Glide.with(holder?.itemView?.context).load(item.photo).into(holder?.previewView)
+        holder?.itemView?.setOnClickListener { view -> lst?.get()?.onClickItem(view, position) }
     }
 
     override fun getItemCount(): Int {
@@ -41,4 +44,8 @@ class HouseAdAdapter(list: ArrayList<*>) : RecyclerView.Adapter<HouseAdAdapter.V
         val priceView = view.findViewById(R.id.priceTextId) as TextView
         val previewView = view.findViewById(R.id.previewImageId) as ImageView
     }
+}
+
+interface OnSelectedItemClickListener {
+    fun onClickItem(view : View , position: Int)
 }
