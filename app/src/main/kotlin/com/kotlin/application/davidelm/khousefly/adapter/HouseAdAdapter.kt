@@ -18,6 +18,7 @@ class HouseAdAdapter(list: ArrayList<*>) : RecyclerView.Adapter<HouseAdAdapter.V
         var item = list[position] as HouseAd
         holder?.titleView?.text = item.title
         holder?.descriptionView?.text = item.description
+        holder?.agencyText?.text = item.agency
         holder?.priceView?.text = String.format(holder?.itemView?.context
                 ?.getString(R.string.price_placeholder).toString(), item.price)
         Glide.with(holder?.itemView?.context).load(item.photo).into(holder?.previewView)
@@ -36,6 +37,7 @@ class HouseAdAdapter(list: ArrayList<*>) : RecyclerView.Adapter<HouseAdAdapter.V
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleView = view.findViewById(R.id.titleTextId) as TextView
         val descriptionView = view.findViewById(R.id.descriptionTextId) as TextView
+        val agencyText = view.findViewById(R.id.agencyTextId) as TextView
         val priceView = view.findViewById(R.id.priceTextId) as TextView
         val previewView = view.findViewById(R.id.previewImageId) as ImageView
     }

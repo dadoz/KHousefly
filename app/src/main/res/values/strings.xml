@@ -4,5 +4,6 @@
     <string name="find_button">FIND</string>
     <string name="owner_hint">owner</string>
     <string name="repo_hint">hint</string>
-    <string name="price_placeholder">prezzo %se</string>
+    <string name="price_placeholder">%s euro</string>
+    <string name="price_description">Price per mounth</string>
 </resources>

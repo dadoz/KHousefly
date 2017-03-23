@@ -39,7 +39,7 @@
 
     <Button
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
         android:textColor="@android:color/white"
         android:id="@+id/findButtonId"
         android:layout_width="match_parent"
